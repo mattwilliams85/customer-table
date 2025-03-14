@@ -86,7 +86,7 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
                     <button
                       type="button"
                       onClick={() => updateAttribute(key, "")}
-                      className="p-2 text-red-600 hover:text-red-800 focus:ring focus:ring-red-400 rounded"
+                      className="p-2 text-red-600 hover:text-red-800 focus:ring focus:ring-red-400 rounded cursor-pointer"
                       aria-label={`Delete ${key}`}
                     >
                       <LuTrash className="text-xl" />
