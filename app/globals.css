@@ -23,3 +23,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
 }
+
+button {
+  cursor: pointer;
+}

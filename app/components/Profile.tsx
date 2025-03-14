@@ -86,7 +86,7 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
                     <button
                       type="button"
                       onClick={() => updateAttribute(key, "")}
-                      className="p-2 text-red-600 hover:text-red-800 focus:ring focus:ring-red-400 rounded cursor-pointer"
+                      className="p-2 text-red-600 hover:text-red-800 focus:ring focus:ring-red-400 rounded"
                       aria-label={`Delete ${key}`}
                     >
                       <LuTrash className="text-xl" />
@@ -128,7 +128,7 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
                   setCustomKey(""),
                   setCustomValue(""))
                 }
-                className="p-2 text-indigo-800 hover:text-indigo-900 focus:ring focus:ring-indigo-400 rounded"
+                className="py-2 text-indigo-800 hover:text-indigo-900 focus:ring focus:ring-indigo-400 rounded"
                 aria-label="Add new attribute"
               >
                 <LuCirclePlus className="text-2xl" />
@@ -140,7 +140,7 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
                 onClick={() => (
                   setEditableCustomer(customer), setEditMode(false)
                 )}
-                className="bg-white w-45 text-black p-2 border rounded cursor-pointer hover:text-indigo-900 hover:border-indigo-900 transition-colors focus:ring focus:ring-indigo-400"
+                className="bg-white w-45 text-black p-2 border rounded hover:text-indigo-900 hover:border-indigo-900 transition-colors focus:ring focus:ring-indigo-400"
                 aria-label="Cancel editing"
               >
                 Cancel
