@@ -7,5 +7,6 @@ export interface Customer {
     email: string;
     id: string;
     last_name: string;
+    [key: string]: string;
   };
 }
