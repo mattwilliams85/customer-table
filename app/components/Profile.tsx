@@ -44,8 +44,8 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
           <button
             type="button"
             onClick={() => setEditMode(true)}
-            className="ml-4 p-1 text-[20px] cursor-pointer"
-            aria-label="Edit"
+            className="ml-4 p-2 text-[20px] cursor-pointer focus:ring focus:ring-indigo-400 rounded"
+            aria-label="Edit attributes"
           >
             <LuPencil />
           </button>
@@ -54,10 +54,13 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
       <form onSubmit={handleSubmit} className="mt-4">
         {["id", "created_at"].map((key) => (
           <div key={key}>
-            <label className="block mb-1 mt-4 text-sm font-medium">
+            <label
+              className="block mb-1 mt-4 text-sm font-medium"
+              htmlFor={key}
+            >
               {formatLabel(key)}
             </label>
-            <span className="text-gray-400 text-lg font-light">
+            <span id={key} className="text-gray-700 text-lg font-light">
               {key === "id"
                 ? customer?.id
                 : formatDate(customer?.attributes.created_at)}
@@ -67,30 +70,31 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
         {Object.entries(editableCustomer.attributes).map(([key, value]) =>
           value && !["id", "created_at"].includes(key) ? (
             <div key={key} className="mt-4">
-              <label className="block mb-1 text-sm font-medium">
+              <label className="block mb-1 text-sm font-medium" htmlFor={key}>
                 {formatLabel(key)}
               </label>
               {editMode ? (
                 <div className="flex items-center gap-2">
                   <input
-                    className="border p-2 rounded w-full max-w-[515px]"
+                    id={key}
+                    className="border p-2 rounded w-full max-w-[515px] focus:ring focus:ring-indigo-400"
                     value={value as string}
                     onChange={(e) => updateAttribute(key, e.target.value)}
+                    aria-label={`Edit ${key}`}
                   />
                   {key !== "email" && (
                     <button
                       type="button"
                       onClick={() => updateAttribute(key, "")}
+                      className="p-2 text-red-600 hover:text-red-800 focus:ring focus:ring-red-400 rounded"
+                      aria-label={`Delete ${key}`}
                     >
-                      <LuTrash
-                        className="text-xl stroke-red-500"
-                        aria-label={`Delete ${key}`}
-                      />
+                      <LuTrash className="text-xl" />
                     </button>
                   )}
                 </div>
               ) : (
-                <span className="text-gray-400 text-lg font-light">
+                <span className="text-gray-700 text-lg font-light">
                   {value as string}
                 </span>
               )}
@@ -99,17 +103,22 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
         )}
         {editMode && (
           <div className="mt-10">
-            <label className="text-sm font-medium">ADD ATTRIBUTE</label>
+            <label className="text-sm font-medium">Add Attribute</label>
             <div className="flex gap-4 mt-1">
-              {[setCustomKey, setCustomValue].map((setter, i) => (
-                <input
-                  key={i}
-                  placeholder={i ? "Value" : "Name"}
-                  className="border p-2 rounded w-full max-w-[250px]"
-                  value={i ? customValue : customKey}
-                  onChange={(e) => setter(e.target.value)}
-                />
-              ))}
+              <input
+                placeholder="Name"
+                className="border p-2 rounded w-full max-w-[250px] focus:ring focus:ring-indigo-400"
+                value={customKey}
+                onChange={(e) => setCustomKey(e.target.value)}
+                aria-label="New attribute name"
+              />
+              <input
+                placeholder="Value"
+                className="border p-2 rounded w-full max-w-[250px] focus:ring focus:ring-indigo-400"
+                value={customValue}
+                onChange={(e) => setCustomValue(e.target.value)}
+                aria-label="New attribute value"
+              />
               <button
                 type="button"
                 onClick={() =>
@@ -119,8 +128,10 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
                   setCustomKey(""),
                   setCustomValue(""))
                 }
+                className="p-2 text-indigo-800 hover:text-indigo-900 focus:ring focus:ring-indigo-400 rounded"
+                aria-label="Add new attribute"
               >
-                <LuCirclePlus className="text-2xl stroke-indigo-800 cursor-pointer" />
+                <LuCirclePlus className="text-2xl" />
               </button>
             </div>
             <div className="mt-8 flex gap-4">
@@ -129,18 +140,20 @@ const Profile = ({ customer }: { customer: Customer | null }) => {
                 onClick={() => (
                   setEditableCustomer(customer), setEditMode(false)
                 )}
-                className="bg-white w-45 text-black p-2 border rounded cursor-pointer hover:text-indigo-900 hover:border-indigo-900 transition-colors"
+                className="bg-white w-45 text-black p-2 border rounded cursor-pointer hover:text-indigo-900 hover:border-indigo-900 transition-colors focus:ring focus:ring-indigo-400"
+                aria-label="Cancel editing"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={!isChanged}
-                className={`p-2 rounded transition-colors w-45 ${
+                className={`p-2 rounded transition-colors w-45 focus:ring ${
                   isChanged
-                    ? "bg-indigo-800 text-white hover:bg-indigo-900"
-                    : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                    ? "bg-indigo-800 text-white hover:bg-indigo-900 focus:ring-indigo-400"
+                    : "bg-gray-400 text-gray-200 cursor-not-allowed focus:ring-gray-400"
                 }`}
+                aria-label="Submit changes"
               >
                 Submit
               </button>
