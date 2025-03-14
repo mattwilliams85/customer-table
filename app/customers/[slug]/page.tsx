@@ -5,21 +5,18 @@ import { formatDate } from "@utils/helpers";
 import Profile from "@components/Profile";
 import Link from "next/link";
 
-interface ParamsType {
-  params: {
-    slug: string;
-  };
-}
+type ParamsType = Promise<{ slug: string }>;
 
-const getCustomers = async (params: { slug: string }) => {
+const getCustomers = async (id: string) => {
   const { customer } = await apiFetch<{ customer: Customer }>(
-    `customers/${params.slug}`
+    `customers/${id}`
   );
   return customer;
 };
 
-const CustomersList = async ({ params }: ParamsType) => {
-  const customer = await getCustomers(params);
+const CustomersList = async ({ params }: { params: ParamsType }) => {
+  const { slug } = await params;
+  const customer = await getCustomers(slug);
 
   return (
     <div className="py-6 px-4 lg:px-0">
